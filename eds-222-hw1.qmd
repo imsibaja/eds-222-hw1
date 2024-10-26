@@ -86,15 +86,15 @@ The goal of pollution monitoring in Lahore is to measure the average pollution c
 
 1.  What is the *population* in this setting? Please be precise.
 
-The "population" is the air quality of Lahore, Pakistan
+The "population" is the air quality of Lahore, Pakistan over the given time period, which is November 2018 to November 2019.
 
 2.  What are the *samples* in this setting? Please be precise.
 
-The "samples" in this setting is the data taken by each unique monitor.
+The "samples" are the different groupings of observations, those taken by the government are one sample, while the crowdsourced data is the other.
 
 3.  These samples were not randomly collected from across locations in Lahore. Given the sampling approaches described above, discuss possible biases that may enter when we use these samples to construct estimates of population parameters.
 
-Since there are not random samples, they may be taken by monitors with the means to take the samples in the first place. Those with means tend to live in less environmentally places then those without the means to do so. In this case, there may be bias introduced in this sample.
+Since there are not random samples, they may be taken by monitors with the means to take the samples in the first place. Those with means tend to live in less environmentally places then those without the means to do so. In this case, there may be bias introduced in this sample. Additionally, there can be government biases in the lack of their spread out location.
 
 ### Question 3
 
@@ -120,7 +120,9 @@ The two samples are extremely different. Not only is the crowdsourced sample mea
 
 3.  Are the differences in mean pollution as expected, given what we know about the sampling strategies?
 
-This was the opposite of my intuition. I would expect the crowdsourced areas to have better air quality, as I initially thought they would have more access to healhtier areas in the city. I can justify the actual outcome do to the law of large numbers. As there are much more observations in the crowdsourced data, we are more likely to see a higher more consistent mean, especially as we know that Lahore has one of the worst air qualities in the world.
+This was the opposite of my intuition. I would expect the crowdsourced areas to have better air quality, as I initially thought they would have more access to healhtier areas in the city. I can justify the actual outcome due to the law of large numbers. As there are much more observations in the crowdsourced data, we are more likely to see a higher a more consistent mean, especially as we know that Lahore has one of the worst air qualities in the world.
+
+Additionally, the government data is only from a very small area. This can have misleading results as the small sample area will create a bias.
 
 ### Question 4
 
@@ -163,6 +165,15 @@ full_df <- bind_rows(govt, crowdsourced)
 full_df
 ```
 
+```{r}
+# draw 1000 observations at random
+sample_k_df <- full_df %>% 
+  slice_sample(n=1000)
+
+sample_k_df
+dim(sample_k_df)
+```
+
 
 Second, create a *stratified random sample*. Do so by (i) stratifying your pooled data-set into strata of 0.01 degrees of latitude, and (ii) randomly sampling 200 air pollution observations from each stratum.
 
@@ -181,6 +192,9 @@ strat_pool_sample <-  full_df |>
 # check visually
 ggplot(strat_pool_sample) +
   geom_bar(aes(x=lat_round))
+
+strat_pool_sample
+dim(strat_pool_sample)
 ```
 
 
@@ -189,8 +203,9 @@ ggplot(strat_pool_sample) +
 Compare estimated means of PM 2.5 for each sampling strategy to the NASA estimate of 89.2 $\mu g/m^3$. Which sample seems to match the satellite data best? What would you recommend the Prime Minister do? Does your proposed sampling strategy rely more on government or on crowd-sourced data? Why might that be the case?
 
 ```{r}
+summary(sample_k_df)
 summary(strat_pool_sample)
 ```
 
 
-The crowdsourcing summary statistics are closer to the NASA estimate of 89.2 and the full random sample mean of 66.57. I would recommend that the prime minister use crowdsourcing data. This is not simply because the means are closer (crowdsourcing mean = 70.2008), but also the crowdsourcing has less bias in their data. There is more observations and more land being covered in addition to the means being much more similar.If it is possible, I would use both the government and the crowd-sourced data. However, if given the choice between one or the other, I would rely on the crowd-sourced data.
+The stratified summary statistics are closer to the NASA estimate of 89.2 with a stratified random sample median and mean of 64.00 and 66.35, respectively. I would recommend that the prime minister use a stratified sampling method. Additionally, I would also use the crowdsourcing data. This is not simply because the means are closer (crowdsourcing mean = 70.2008), but also the crowdsourcing has less bias in their data. There is more observations and more land being covered in addition to the means being much more similar. If given the choice between all the methods, I would rely on a stratified sampling method of the crowd-sourced data.

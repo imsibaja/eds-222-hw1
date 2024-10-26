@@ -260,15 +260,15 @@ Tip
 <ol type="1">
 <li>What is the <em>population</em> in this setting? Please be precise.</li>
 </ol>
-<p>The “population” is the air quality of Lahore, Pakistan</p>
+<p>The “population” is the air quality of Lahore, Pakistan over the given time period, which is November 2018 to November 2019.</p>
 <ol start="2" type="1">
 <li>What are the <em>samples</em> in this setting? Please be precise.</li>
 </ol>
-<p>The “samples” in this setting is the data taken by each unique monitor.</p>
+<p>The “samples” are the different groupings of observations, those taken by the government are one sample, while the crowdsourced data is the other.</p>
 <ol start="3" type="1">
 <li>These samples were not randomly collected from across locations in Lahore. Given the sampling approaches described above, discuss possible biases that may enter when we use these samples to construct estimates of population parameters.</li>
 </ol>
-<p>Since there are not random samples, they may be taken by monitors with the means to take the samples in the first place. Those with means tend to live in less environmentally places then those without the means to do so. In this case, there may be bias introduced in this sample.</p>
+<p>Since there are not random samples, they may be taken by monitors with the means to take the samples in the first place. Those with means tend to live in less environmentally places then those without the means to do so. In this case, there may be bias introduced in this sample. Additionally, there can be government biases in the lack of their spread out location.</p>
 </section>
 <section id="question-3" class="level3">
 <h3 class="anchored" data-anchor-id="question-3">Question 3</h3>
@@ -310,7 +310,8 @@ Tip
 <ol start="3" type="1">
 <li>Are the differences in mean pollution as expected, given what we know about the sampling strategies?</li>
 </ol>
-<p>This was the opposite of my intuition. I would expect the crowdsourced areas to have better air quality, as I initially thought they would have more access to healhtier areas in the city. I can justify the actual outcome do to the law of large numbers. As there are much more observations in the crowdsourced data, we are more likely to see a higher more consistent mean, especially as we know that Lahore has one of the worst air qualities in the world.</p>
+<p>This was the opposite of my intuition. I would expect the crowdsourced areas to have better air quality, as I initially thought they would have more access to healhtier areas in the city. I can justify the actual outcome due to the law of large numbers. As there are much more observations in the crowdsourced data, we are more likely to see a higher a more consistent mean, especially as we know that Lahore has one of the worst air qualities in the world.</p>
+<p>Additionally, the government data is only from a very small area. This can have misleading results as the small sample area will create a bias.</p>
 </section>
 <section id="question-4" class="level3">
 <h3 class="anchored" data-anchor-id="question-4">Question 4</h3>
@@ -386,11 +387,38 @@ Tip
 # ℹ 7,438 more rows</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw 1000 observations at random</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>sample_k_df <span class="ot">&lt;-</span> full_df <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">1000</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>sample_k_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,000 × 4
+   date          PM latitude longitude
+   &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2019-08-09    76     31.6      74.3
+ 2 2019-03-24    65     31.6      74.4
+ 3 2019-02-25    85     31.6      74.3
+ 4 2019-02-06    24     31.6      74.3
+ 5 2019-11-10   117     31.6      74.3
+ 6 2019-07-30    50     31.6      74.3
+ 7 2018-12-04    46     31.6      74.3
+ 8 2019-11-22    61     31.6      74.3
+ 9 2019-01-04    25     31.6      74.4
+10 2019-09-23    99     31.6      74.4
+# ℹ 990 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sample_k_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1000    4</code></pre>
+</div>
+</div>
 <p>Second, create a <em>stratified random sample</em>. Do so by (i) stratifying your pooled data-set into strata of 0.01 degrees of latitude, and (ii) randomly sampling 200 air pollution observations from each stratum.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>full_df <span class="ot">&lt;-</span> full_df <span class="sc">|&gt;</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lat_round =</span> <span class="fu">round</span>(latitude, <span class="at">digits =</span> <span class="dv">2</span>))</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>full_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>full_df <span class="ot">&lt;-</span> full_df <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lat_round =</span> <span class="fu">round</span>(latitude, <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>full_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7,448 × 5
    date          PM latitude longitude lat_round
@@ -409,21 +437,43 @@ Tip
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group by stratifies </span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># slice sample creates a random selection</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>strat_pool_sample <span class="ot">&lt;-</span>  full_df <span class="sc">|&gt;</span> </span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lat_round) <span class="sc">|&gt;</span> </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">200</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check visually</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(strat_pool_sample) <span class="sc">+</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>lat_round))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group by stratifies </span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># slice sample creates a random selection</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>strat_pool_sample <span class="ot">&lt;-</span>  full_df <span class="sc">|&gt;</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lat_round) <span class="sc">|&gt;</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">200</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check visually</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(strat_pool_sample) <span class="sc">+</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>lat_round))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="eds-222-hw1_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="eds-222-hw1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>strat_pool_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,000 × 5
+# Groups:   lat_round [5]
+   date          PM latitude longitude lat_round
+   &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2019-02-15    35     31.6      74.3      31.6
+ 2 2019-09-17    20     31.6      74.3      31.6
+ 3 2019-07-05    80     31.6      74.3      31.6
+ 4 2019-08-05    21     31.6      74.3      31.6
+ 5 2019-06-14    61     31.6      74.3      31.6
+ 6 2019-03-19    43     31.6      74.3      31.6
+ 7 2019-06-26    71     31.6      74.3      31.6
+ 8 2019-01-08    65     31.6      74.3      31.6
+ 9 2019-11-05   103     31.6      74.3      31.6
+10 2019-01-22    95     31.6      74.3      31.6
+# ℹ 990 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(strat_pool_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1000    5</code></pre>
 </div>
 </div>
 </section>
@@ -431,14 +481,24 @@ Tip
 <h4 class="anchored" data-anchor-id="question-6.2">Question 6.2</h4>
 <p>Compare estimated means of PM 2.5 for each sampling strategy to the NASA estimate of 89.2 <span class="math inline">\(\mu g/m^3\)</span>. Which sample seems to match the satellite data best? What would you recommend the Prime Minister do? Does your proposed sampling strategy rely more on government or on crowd-sourced data? Why might that be the case?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(strat_pool_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sample_k_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      date                  PM            latitude       longitude    
  Min.   :2018-11-04   Min.   : 15.00   Min.   :31.56   Min.   :74.31  
- 1st Qu.:2019-02-06   1st Qu.: 43.00   1st Qu.:31.57   1st Qu.:74.33  
- Median :2019-05-24   Median : 67.00   Median :31.58   Median :74.36  
- Mean   :2019-05-19   Mean   : 67.87   Mean   :31.58   Mean   :74.37  
- 3rd Qu.:2019-08-23   3rd Qu.: 93.00   3rd Qu.:31.59   3rd Qu.:74.40  
+ 1st Qu.:2019-02-08   1st Qu.: 38.00   1st Qu.:31.57   1st Qu.:74.33  
+ Median :2019-05-18   Median : 58.00   Median :31.58   Median :74.34  
+ Mean   :2019-05-19   Mean   : 62.99   Mean   :31.58   Mean   :74.35  
+ 3rd Qu.:2019-08-27   3rd Qu.: 89.00   3rd Qu.:31.58   3rd Qu.:74.38  
+ Max.   :2019-11-30   Max.   :120.00   Max.   :31.60   Max.   :74.42  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(strat_pool_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date                  PM            latitude       longitude    
+ Min.   :2018-11-04   Min.   : 15.00   Min.   :31.56   Min.   :74.31  
+ 1st Qu.:2019-02-13   1st Qu.: 41.00   1st Qu.:31.57   1st Qu.:74.33  
+ Median :2019-05-23   Median : 67.00   Median :31.58   Median :74.36  
+ Mean   :2019-05-21   Mean   : 67.45   Mean   :31.58   Mean   :74.37  
+ 3rd Qu.:2019-08-30   3rd Qu.: 94.00   3rd Qu.:31.59   3rd Qu.:74.40  
  Max.   :2019-11-30   Max.   :120.00   Max.   :31.60   Max.   :74.42  
    lat_round    
  Min.   :31.56  
@@ -449,7 +509,7 @@ Tip
  Max.   :31.60  </code></pre>
 </div>
 </div>
-<p>The crowdsourcing summary statistics are closer to the NASA estimate of 89.2 and the full random sample mean of 66.57. I would recommend that the prime minister use crowdsourcing data. This is not simply because the means are closer (crowdsourcing mean = 70.2008), but also the crowdsourcing has less bias in their data. There is more observations and more land being covered in addition to the means being much more similar.If it is possible, I would use both the government and the crowd-sourced data. However, if given the choice between one or the other, I would rely on the crowd-sourced data.</p>
+<p>The stratified summary statistics are closer to the NASA estimate of 89.2 with a stratified random sample median and mean of 64.00 and 66.35, respectively. I would recommend that the prime minister use a stratified sampling method. Additionally, I would also use the crowdsourcing data. This is not simply because the means are closer (crowdsourcing mean = 70.2008), but also the crowdsourcing has less bias in their data. There is more observations and more land being covered in addition to the means being much more similar. If given the choice between all the methods, I would rely on a stratified sampling method of the crowd-sourced data.</p>
 </section>
 </section>
 </section>
