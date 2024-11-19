@@ -397,16 +397,16 @@ Tip
 <pre><code># A tibble: 1,000 × 4
    date          PM latitude longitude
    &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
- 1 2019-08-09    76     31.6      74.3
- 2 2019-03-24    65     31.6      74.4
- 3 2019-02-25    85     31.6      74.3
- 4 2019-02-06    24     31.6      74.3
- 5 2019-11-10   117     31.6      74.3
- 6 2019-07-30    50     31.6      74.3
- 7 2018-12-04    46     31.6      74.3
- 8 2019-11-22    61     31.6      74.3
- 9 2019-01-04    25     31.6      74.4
-10 2019-09-23    99     31.6      74.4
+ 1 2019-01-17    29     31.6      74.3
+ 2 2019-06-23    44     31.6      74.3
+ 3 2019-04-07    73     31.6      74.3
+ 4 2018-12-16    67     31.6      74.4
+ 5 2018-12-09   111     31.6      74.3
+ 6 2019-07-02    50     31.6      74.3
+ 7 2019-11-10   116     31.6      74.4
+ 8 2019-06-19    57     31.6      74.3
+ 9 2018-11-09    62     31.6      74.4
+10 2019-01-17    99     31.6      74.3
 # ℹ 990 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sample_k_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -459,16 +459,16 @@ Tip
 # Groups:   lat_round [5]
    date          PM latitude longitude lat_round
    &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 2019-02-15    35     31.6      74.3      31.6
- 2 2019-09-17    20     31.6      74.3      31.6
- 3 2019-07-05    80     31.6      74.3      31.6
- 4 2019-08-05    21     31.6      74.3      31.6
- 5 2019-06-14    61     31.6      74.3      31.6
- 6 2019-03-19    43     31.6      74.3      31.6
- 7 2019-06-26    71     31.6      74.3      31.6
- 8 2019-01-08    65     31.6      74.3      31.6
- 9 2019-11-05   103     31.6      74.3      31.6
-10 2019-01-22    95     31.6      74.3      31.6
+ 1 2019-08-15    25     31.6      74.3      31.6
+ 2 2019-02-12   101     31.6      74.3      31.6
+ 3 2019-07-15    54     31.6      74.3      31.6
+ 4 2019-03-19    43     31.6      74.3      31.6
+ 5 2019-06-18    96     31.6      74.3      31.6
+ 6 2019-09-14    49     31.6      74.3      31.6
+ 7 2019-03-22    62     31.6      74.3      31.6
+ 8 2019-01-28    30     31.6      74.3      31.6
+ 9 2019-07-03    95     31.6      74.3      31.6
+10 2018-11-14    36     31.6      74.3      31.6
 # ℹ 990 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(strat_pool_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -483,22 +483,22 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sample_k_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      date                  PM            latitude       longitude    
- Min.   :2018-11-04   Min.   : 15.00   Min.   :31.56   Min.   :74.31  
- 1st Qu.:2019-02-08   1st Qu.: 38.00   1st Qu.:31.57   1st Qu.:74.33  
- Median :2019-05-18   Median : 58.00   Median :31.58   Median :74.34  
- Mean   :2019-05-19   Mean   : 62.99   Mean   :31.58   Mean   :74.35  
- 3rd Qu.:2019-08-27   3rd Qu.: 89.00   3rd Qu.:31.58   3rd Qu.:74.38  
- Max.   :2019-11-30   Max.   :120.00   Max.   :31.60   Max.   :74.42  </code></pre>
+<pre><code>      date                  PM           latitude       longitude    
+ Min.   :2018-11-04   Min.   : 15.0   Min.   :31.56   Min.   :74.31  
+ 1st Qu.:2019-02-13   1st Qu.: 38.0   1st Qu.:31.57   1st Qu.:74.33  
+ Median :2019-05-22   Median : 58.0   Median :31.58   Median :74.34  
+ Mean   :2019-05-23   Mean   : 62.7   Mean   :31.58   Mean   :74.35  
+ 3rd Qu.:2019-08-29   3rd Qu.: 88.0   3rd Qu.:31.58   3rd Qu.:74.38  
+ Max.   :2019-11-30   Max.   :120.0   Max.   :31.60   Max.   :74.42  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(strat_pool_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      date                  PM            latitude       longitude    
  Min.   :2018-11-04   Min.   : 15.00   Min.   :31.56   Min.   :74.31  
- 1st Qu.:2019-02-13   1st Qu.: 41.00   1st Qu.:31.57   1st Qu.:74.33  
- Median :2019-05-23   Median : 67.00   Median :31.58   Median :74.36  
- Mean   :2019-05-21   Mean   : 67.45   Mean   :31.58   Mean   :74.37  
- 3rd Qu.:2019-08-30   3rd Qu.: 94.00   3rd Qu.:31.59   3rd Qu.:74.40  
+ 1st Qu.:2019-02-03   1st Qu.: 41.00   1st Qu.:31.57   1st Qu.:74.33  
+ Median :2019-05-10   Median : 64.00   Median :31.58   Median :74.36  
+ Mean   :2019-05-12   Mean   : 66.66   Mean   :31.58   Mean   :74.37  
+ 3rd Qu.:2019-08-21   3rd Qu.: 92.00   3rd Qu.:31.59   3rd Qu.:74.40  
  Max.   :2019-11-30   Max.   :120.00   Max.   :31.60   Max.   :74.42  
    lat_round    
  Min.   :31.56  
